@@ -21,8 +21,7 @@ RUN apk update && apk upgrade && apk add --no-cache \
     php${PHP_VERSION}-mbstring \
     php${PHP_VERSION}-openssl \
     php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-zip \
-    php${PHP_VERSION}-redis
+    php${PHP_VERSION}-zip
 
 # Config configuration
 RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
@@ -36,17 +35,17 @@ RUN rm -f /var/cache/apk/*
 WORKDIR /var/www
 
 # Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
-RUN wget https://wordpress.org/latest.zip && \
-    unzip latest.zip && \
-    cp -rf wordpress/* . && \
-    rm -rf wordpress latest.zip
+RUN wget https://wordpress.org/latest.zip
+RUN unzip latest.zip
+RUN cp -rf wordpress/* .
+RUN rm -rf wordpress latest.zip
 
 # Copies, run and delete a wp config script
 COPY ./requirements/wordpress/conf/wp-config-create.sh .
-RUN sh wp-config-create.sh && rm wp-config-create.sh 
+RUN sh wp-config-create.sh && rm wp-config-create.sh
 
 # Gives permision to all users
 RUN chmod -R 0777 wp-content/
 
-
+# Builds PHP version 8.2
 CMD ["/usr/sbin/php-fpm82", "-F"]
