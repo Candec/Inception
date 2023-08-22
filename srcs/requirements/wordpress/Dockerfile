@@ -1,15 +1,9 @@
-# FROM alpine:3.18
-
-# # Arguments to complete the following commands
-# ARG PHP_VERSION=82 \
+# FROM alpine:3.16
+# ARG PHP_VERSION=8 \
 #     DB_NAME \
 #     DB_USER \
 #     DB_PASS
-
-# # Packages to install
 # RUN apk update && apk upgrade && apk add --no-cache \
-#     wget \
-#     unzip \
 #     php${PHP_VERSION} \
 #     php${PHP_VERSION}-fpm \
 #     php${PHP_VERSION}-mysqli \
@@ -21,41 +15,39 @@
 #     php${PHP_VERSION}-mbstring \
 #     php${PHP_VERSION}-openssl \
 #     php${PHP_VERSION}-xml \
-#     php${PHP_VERSION}-zip
-
-# # Config configuration
-# RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
-# RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php82/php-fpm.d/www.conf
-# RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm.d/www.conf
-
-# # Clear de cache
-# RUN rm -f /var/cache/apk/*
-
-# # Change Directory
+#     php${PHP_VERSION}-zip \
+#     php${PHP_VERSION}-redis \
+#     wget \
+#     unzip && \
+#     sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" \
+#       /etc/php8/php-fpm.d/www.conf && \
+#     sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" \
+#       /etc/php8/php-fpm.d/www.conf && \
+#     sed -i "s|;listen.group = nobody|listen.group = nobody|g" \
+#       /etc/php8/php-fpm.d/www.conf && \
+#     rm -f /var/cache/apk/*
 # WORKDIR /var/www
-
-# # Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
-# RUN wget https://wordpress.org/latest.zip
-# RUN unzip latest.zip
-# RUN cp -rf wordpress/* .
-# RUN rm -rf wordpress latest.zip
-
-# # Copies, run and delete a wp config script
+# RUN wget https://wordpress.org/latest.zip && \
+#     unzip latest.zip && \
+#     cp -rf wordpress/* . && \
+#     rm -rf wordpress latest.zip
 # COPY ./requirements/wordpress/conf/wp-config-create.sh .
-# RUN sh wp-config-create.sh && rm wp-config-create.sh
+# RUN sh wp-config-create.sh && rm wp-config-create.sh && \
+#     chmod -R 0777 wp-content/
+# CMD ["/usr/sbin/php-fpm8", "-F"]
 
-# # Gives permision to all users
-# RUN chmod -R 0777 wp-content/
+FROM alpine:3.18
 
-# # Builds PHP version 8.2
-# CMD ["/usr/sbin/php-fpm82", "-F"]
-
-FROM alpine:3.16
-ARG PHP_VERSION=8 \
+# Arguments to complete the following commands
+ARG PHP_VERSION=82 \
     DB_NAME \
     DB_USER \
     DB_PASS
+
+# Packages to install
 RUN apk update && apk upgrade && apk add --no-cache \
+    wget \
+    unzip \
     php${PHP_VERSION} \
     php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-mysqli \
@@ -67,23 +59,31 @@ RUN apk update && apk upgrade && apk add --no-cache \
     php${PHP_VERSION}-mbstring \
     php${PHP_VERSION}-openssl \
     php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-zip \
-    php${PHP_VERSION}-redis \
-    wget \
-    unzip && \
-    sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" \
-      /etc/php8/php-fpm.d/www.conf && \
-    sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" \
-      /etc/php8/php-fpm.d/www.conf && \
-    sed -i "s|;listen.group = nobody|listen.group = nobody|g" \
-      /etc/php8/php-fpm.d/www.conf && \
-    rm -f /var/cache/apk/*
+    php${PHP_VERSION}-zip
+
+# Config configuration
+RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
+RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php82/php-fpm.d/www.conf
+RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm.d/www.conf
+
+# Clear de cache
+RUN rm -f /var/cache/apk/*
+
+# Change Directory
 WORKDIR /var/www
-RUN wget https://wordpress.org/latest.zip && \
-    unzip latest.zip && \
-    cp -rf wordpress/* . && \
-    rm -rf wordpress latest.zip
+
+# Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
+RUN wget https://wordpress.org/latest.zip
+RUN unzip latest.zip
+RUN cp -rf wordpress/* .
+RUN rm -rf wordpress latest.zip
+
+# Copies, run and delete a wp config script
 COPY ./requirements/wordpress/conf/wp-config-create.sh .
-RUN sh wp-config-create.sh && rm wp-config-create.sh && \
-    chmod -R 0777 wp-content/
-CMD ["/usr/sbin/php-fpm8", "-F"]
+RUN sh wp-config-create.sh && rm wp-config-create.sh
+
+# Gives permision to all users
+RUN chmod -R 0777 wp-content/
+
+# Builds PHP version 8.2
+CMD ["/usr/sbin/php-fpm82", "-F"]
