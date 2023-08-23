@@ -65,5 +65,5 @@ volumes:
       device: /home/${USER}/data/mariadb
 
 networks:
-    inception
+    inception:
         # driver: bridge
