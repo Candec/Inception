@@ -27,10 +27,14 @@ DELETE FROM mysql.user WHERE User='';
 DROP DATABASE test;
 DELETE FROM mysql.db WHERE Db='test';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT}';
-CREATE DATABASE ${DB_NAME} CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER '${DB_USER}'@'%' IDENTIFIED by '${DB_PASS}';
-GRANT ALL PRIVILEGES ON wordpress.* TO '${DB_USER}'@'%';
+CREATE DATABASE IF NOT EXISTS ${DB_NAME} CHARACTER SET utf8 COLLATE utf8_general_ci ;
+
+CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASS}';
+GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%' WITH GRANT OPTION;
+#DROP TABLE WHERE '%test%'
+-- set root password
+UPDATE mysql.user SET password=password('$DB_ROOT') WHERE user='root';
+
 FLUSH PRIVILEGES;
 EOF
         # run init.sql
