@@ -11,7 +11,7 @@ services:
     ports:
       - "443:443"
     networks:
-      - inception
+      - inceptions
     volumes:
       - ./requirements/nginx/conf/:/etc/nginx/http.d/
       - ./requirements/nginx/tools:/etc/nginx/ssl/
@@ -31,7 +31,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - inception
+      - inceptions
     restart: always
 
   wordpress:
@@ -46,7 +46,7 @@ services:
     depends_on:
       - mariadb
     networks:
-      - inception
+      - inceptions
     restart: always
     volumes:
       - wp-volume:/var/www/
@@ -65,5 +65,5 @@ volumes:
       device: /home/${USER}/data/mariadb
 
 networks:
-    inception:
+    inceptions:
         driver: bridge

@@ -1,0 +1,5 @@
+# Check open ports
+ss -tnlp
+
+# Visualize the network
+docker network ls
