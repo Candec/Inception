@@ -87,6 +87,13 @@ DB_ROOT=rootpass
 DB_USER=wpuser
 DB_PASS=wppass
 
+####################
+#  Access MariaDB  #
+####################
+docker exec -it mariadb mariadb wordpress
+SELECT * FROM wp_users;
+SELECT * FROM wp_usermeta;
+
 
 TREE GENERATOR SH:
 
