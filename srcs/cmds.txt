@@ -76,8 +76,16 @@ mv <user>.42.fr.pem <user>.42.fr.crt
 sudo nano /etc/hosts
 	-> 127.0.0.1	jibanez-.42.fr localhost
 
-
-
+############
+#   .env   #
+############
+DOMAIN_NAME=jibanez-.42.fr
+CERT_=./requirements/tools/jibanez-.42.fr.crt
+KEY_=./requirements/tools/jibanez-.42.fr.key
+DB_NAME=wordpress
+DB_ROOT=rootpass
+DB_USER=wpuser
+DB_PASS=wppass
 
 
 TREE GENERATOR SH:
