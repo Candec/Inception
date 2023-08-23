@@ -15,6 +15,7 @@ down:
 
 re: down
 	@printf "Rebuild configuration ${name}...\n"
+	@docker volume rm srcs_wp-volume
 	@sudo rm -rf ~/Inception/data/
 	@bash srcs/requirements/wordpress/tools/make_dir.sh
 	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
