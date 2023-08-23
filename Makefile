@@ -15,6 +15,8 @@ down:
 
 re: down
 	@printf "Rebuild configuration ${name}...\n"
+	@sudo rm -rf ~/Inception/data/
+	@bash srcs/requirements/wordpress/tools/make_dir.sh
 	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
 
 clean: down
@@ -22,6 +24,7 @@ clean: down
 	@docker system prune -a
 	@sudo rm -rf ~/Inception/data/wordpress/*
 	@sudo rm -rf ~/Inception/data/mariadb/*
+	@sudo rm -rf ~/Inception/data/
 
 fclean:
 	@printf "Total clean of all configurations docker\n"
@@ -31,5 +34,7 @@ fclean:
 	@docker volume prune --force
 	@sudo rm -rf ~/Inception/data/wordpress/*
 	@sudo rm -rf ~/Inception/data/mariadb/*
+	@sudo rm -rf ~/Inception/data/
+
 
 .PHONY	: all build down re clean fclean
