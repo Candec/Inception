@@ -13,7 +13,7 @@ RUN apt update && apt upgrade && apt intall \
     sendmail \
     php${PHP_VERSION} \
     php${PHP_VERSION}-fpm \
-    php${PHP_VERSION}-mysql \
+    php${PHP_VERSION}-mysql
 
 # Config configuration
 RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
