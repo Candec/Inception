@@ -25,7 +25,7 @@ services:
 
   mariadb:
     build: ./requirements/mariadb
-      context: .
+    context: .
       # dockerfile:
       args:
         WORDPRESS_DB_NAME:  ${WP_DB_NAME}
