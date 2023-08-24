@@ -7,7 +7,8 @@ EXPOSE 3306
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/
 COPY ./tools /var/www/
 
-RUN /etc/init.d/mariadb setup
+RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
+
 RUN mysql < /var/www/tmpl.sql
 RUN rm -f /var/www/tmpl.sql;
 
