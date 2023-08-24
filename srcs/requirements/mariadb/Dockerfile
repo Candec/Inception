@@ -1,6 +1,6 @@
 FROM debian:10
 
-RUN apt update && apt -y install mysql-server mysql-client
+RUN apt update && apt -y install mariadb-server mariadb-client
 
 EXPOSE 3306
 
