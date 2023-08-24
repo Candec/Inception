@@ -7,7 +7,7 @@ ARG PHP_VERSION=82 \
     DB_PASS
 
 # Packages to install
-RUN apt update && apt upgrade && apk intall \
+RUN apt update && apt upgrade && apt intall \
     wget \
     unzip \
     php${PHP_VERSION} \
