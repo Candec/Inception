@@ -1,6 +1,6 @@
 FROM debian:10
 
-RUN apt update && apt -y install --no-cache mysql-server mysql-client
+RUN apt update && apt -y install mysql-server mysql-client
 
 EXPOSE 3306
 
