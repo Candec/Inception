@@ -7,6 +7,6 @@ EXPOSE 3306
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/
 COPY ./tools /var/www/
 
-RUN service mysql start && mysql < /var/www/create_db.sql && rm -f /var/www/create_db.sql;
+RUN service mysql start && mysql < /var/www/tmpl.sql && rm -f /var/www/tmpl.sql;
 
 CMD ["mysqld"]
