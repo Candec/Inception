@@ -21,8 +21,8 @@ RUN { echo '[mysqld]'; \
     } | tee /etc/my.cnf.d/docker.cnf;
 RUN chmod 744 /etc/my.cnf.d/docker.cnf;
 
-RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
-COPY ./conf/tmpl.sql /tmpl.sql
+# RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
+# COPY ./conf/tmpl.sql /tmpl.sql
 
 # Expose the port
 EXPOSE 3306
