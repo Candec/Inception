@@ -1,37 +1,16 @@
 FROM debian:buster
 
-# Arguments to complete the following commands
-ARG PHP_VERSION=7.3 \
-    DB_NAME \
-    DB_USER \
-    DB_PASS
-
 # Packages to install
 RUN apt-get update && apt-get upgrade && apt-get install -y unzip php7.3 php-fpm php-mysql wget sendmail
 
-# Config configuration
-RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
-RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php82/php-fpm.d/www.conf
-RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm.d/www.conf
+EXPOSE 9000
 
-# Clear de cache
-RUN rm -f /var/cache/apk/*
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
-# Change Directory
-WORKDIR /var/www
+COPY ./wordpress/tools /var/www/
 
-# Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
-RUN wget https://wordpress.org/latest.zip
-RUN unzip latest.zip
-RUN cp -rf wordpress/* .
-RUN rm -rf wordpress latest.zip
+RUN chmod +x /var/www/wordpress_start.sh
 
-# Copies, run and delete a wp config script
-COPY .conf/wp-config-create.sh .
-RUN sh wp-config-create.sh && rm wp-config-create.sh
+ENTRYPOINT [ "/var/www/wordpress_start.sh" ]
 
-# Gives permision to all users
-RUN chmod -R 0777 wp-content/
-
-# Builds PHP version 8.2
-CMD ["/usr/sbin/php-fpm82", "-F"]
+CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
