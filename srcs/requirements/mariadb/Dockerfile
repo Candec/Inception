@@ -1,6 +1,6 @@
 FROM alpine:3.18
 
-RUN apk update && apk add --no-cache mysql mysql-client
+RUN apk update && apk add --no-cache mysql-server mysql-client
 
 EXPOSE 3306
 
