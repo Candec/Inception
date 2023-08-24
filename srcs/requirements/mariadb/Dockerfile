@@ -11,7 +11,7 @@ RUN apk update && apk add --no-cache mariadb mariadb-client
 RUN mkdir -p /var/run/mysqld \
     && chown -R mysql:mysql /var/run/mysqld
 
-RUN ls
+RUN ls /home
 COPY /home/candec/Documents/Inception/srcs/requirements/mariadb/conf/my.cnf /my.cnf.tmpl
 RUN chmod 744 /my.cnf.tmpl
 
