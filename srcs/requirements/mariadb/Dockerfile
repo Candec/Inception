@@ -12,9 +12,7 @@ RUN mkdir -p /var/run/mysqld \
     && chmod 777 /var/run/mysqld;
 
 COPY requirements/mariadb/conf/my.cnf /etc/mysql/my.cnf
-RUn ls -la /var/lib
-RUN chmod 775 /my.cnf
-RUN mv my.cnf /var/lib/mysql/my.cnf
+RUN chmod 775 /etc/mysql/my.cnf
 
 # RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
 
