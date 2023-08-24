@@ -12,7 +12,3 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 fi
 
 cat tmpl.sql | envsubst > /tmp/create_db.sql
-
-# run init.sql daemon
-/usr/bin/mysqld --user=mysql --datadir="/var/lib/mysql" --port=3306 --init-file /tmp/create_db.sql $@
-rm -f /tmp/create_db.sql
