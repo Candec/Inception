@@ -4,7 +4,7 @@ all:
 	@bash srcs/requirements/wordpress/tools/make_dir.sh
 	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d
 
-build:
+up:
 	@printf "Building configuration ${name}...\n"
 	@bash srcs/requirements/wordpress/tools/make_dir.sh
 	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
@@ -39,4 +39,4 @@ fclean:
 	@sudo rm -rf ~/Inception/data/
 
 
-.PHONY	: all build down re clean fclean
+.PHONY	: all up down re clean fclean
