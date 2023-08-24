@@ -1,7 +1,7 @@
 FROM debian:10
 
 # Arguments to complete the following commands
-ARG PHP_VERSION=8.2 \
+ARG PHP_VERSION=7.4 \
     DB_NAME \
     DB_USER \
     DB_PASS
