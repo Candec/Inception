@@ -18,8 +18,8 @@ RUN { echo '[mysqld]'; \
       echo 'bind-address=0.0.0.0'; \
       echo 'skip-networking=false'; \
       echo 'innodb_data_file_path=./ibdata1:10M:autoextend'; \
-    } | tee etc/mysql/my.cnf
-RUN chmod 744 etc/mysql/my.cnf
+    } | tee /etc/my.cnf.d/docker.cnf;
+RUN chmod 744 /etc/my.cnf.d/docker.cnf;
 
 RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
 COPY ./conf/tmpl.sql /tmpl.sql
