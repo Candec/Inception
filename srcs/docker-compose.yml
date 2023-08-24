@@ -4,6 +4,7 @@ services:
   nginx:
     build:
       # context: .
+      image: nginx
       dockerfile: requirements/nginx/Dockerfile
     container_name: nginx
     depends_on:
