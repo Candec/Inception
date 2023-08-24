@@ -7,12 +7,12 @@ ARG PHP_VERSION=7.3 \
     DB_PASS
 
 # Packages to install
-RUN apt update && apt upgrade \
-RUN apt install wget \
-RUN apt install unzip \
-RUN apt install sendmail \
-RUN apt install php${PHP_VERSION} \
-RUN apt install php${PHP_VERSION}-fpm \
+RUN apt update && apt upgrade
+RUN apt install wget
+RUN apt install unzip
+RUN apt install sendmail
+RUN apt install php${PHP_VERSION}
+RUN apt install php${PHP_VERSION}-fpm
 RUN apt install php${PHP_VERSION}-mysql
 
 # Config configuration
