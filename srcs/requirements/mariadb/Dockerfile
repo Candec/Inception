@@ -1,10 +1,5 @@
 FROM alpine:3.18
 
-# Arguments to complete the following commands
-ARG DB_NAME \
-    DB_USER \
-    DB_PASS
-
 # update the packages and installs maria db and its client
 RUN apk update && apk add --no-cache mariadb mariadb-client
 
