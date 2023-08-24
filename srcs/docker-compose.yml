@@ -18,7 +18,7 @@ services:
       - ./requirements/nginx/tools:/etc/nginx/ssl/
       - wp-volume:/var/www/
     restart: always
-    enviroment:
+    environment:
       NGINX_WORDPRESS_CONTAINER_NAME: ${NGINX_WP_CONTAINER_NAME}
       WORDPRESS_PORT: ${NGINX_WP_PORT}
       DOMAIN_NAME: ${DOMAIN_NAME}
@@ -27,7 +27,7 @@ services:
     build:
       context: .
       dockerfile: requirements/mariadb/Dockerfile
-      args:
+      environment:
         WORDPRESS_DB_NAME:  ${WP_DB_NAME}
         MARIADB_HOST:       ${MDB_HOST}
         MARIADB_PORT:       ${MDB_PORT}
@@ -46,7 +46,7 @@ services:
     build:
       context: .
       dockerfile: requirements/wordpress/Dockerfile
-      args:
+      environment:
         MYSQL_DATABASE: ${WP_DB_NAME}
         MYSQL_USER: ${MDB_USER_USR}
         MYSQL_PASSWORD: ${MDB_ROOT_PWD}
