@@ -27,6 +27,6 @@ COPY requirements/mariadb/tools/create_db.sh .
 RUN sh create_db.sh && rm create_db.sh
 
 RUN /usr/bin/mysqld --user=mysql --datadir="/var/lib/mysql" --port=3306 --init-file /tmp/create_db.sql $@
-rm -f /tmp/create_db.sql
+RUN rm -f /tmp/create_db.sql
 
 CMD ["mysqld"]
