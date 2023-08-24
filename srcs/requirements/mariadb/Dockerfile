@@ -1,32 +1,12 @@
 FROM alpine:3.18
 
-# update the packages and installs maria db and its client
-RUN apk update && apk add --no-cache mariadb mariadb-client procps nano gettext
+RUN apk update && apk add --no-cache mariadb mariadb-client
 
-# write into a file located at /var/run/mysqld the echo commands
-# which are going to be used to configured maria db
-# 1. Name
-# 2. & 3. skip caching for optimization and skip name checking (we only have one DB)
-# 4. Config for accepting remote connections
-RUN mkdir -p /var/run/mysqld \
-    && chmod 777 /var/run/mysqld;
-
-COPY requirements/mariadb/conf/my.cnf /etc/mysql/my.cnf
-RUN chmod 775 /etc/mysql/my.cnf
-
-# RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
-
-COPY requirements/mariadb/conf/tmpl.sql /tmpl.sql
-
-# Expose the port
 EXPOSE 3306
 
-# Table creation using bash scripts and then removing the scrips
-COPY requirements/mariadb/tools/create_db.sh .
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+COPY ./tools /var/www/
 
-RUN sh create_db.sh && rm create_db.sh
-
-RUN /usr/bin/mysqld --user=mysql --datadir="/var/lib/mysql" --port=3306 --init-file /tmp/create_db.sql $@
-RUN rm -f /tmp/create_db.sql
+RUN service mysql start && mysql < /var/www/create_db.sql && rm -f /var/www/create_db.sql;
 
 CMD ["mysqld"]
