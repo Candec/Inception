@@ -24,9 +24,9 @@ services:
     #   DOMAIN_NAME: ${DOMAIN_NAME}
 
   mariadb:
-    build: ./requirements/mariadb
-    context: .
-      # dockerfile:
+    build:
+      context: .
+      dockerfile: requirements/mariadb/Dockerfile
       args:
         WORDPRESS_DB_NAME:  ${WP_DB_NAME}
         MARIADB_HOST:       ${MDB_HOST}

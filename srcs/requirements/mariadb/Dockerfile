@@ -11,8 +11,16 @@ RUN apk update && apk add --no-cache mariadb mariadb-client
 RUN mkdir -p /var/run/mysqld \
     && chown -R mysql:mysql /var/run/mysqld
 
-COPY ./conf/my.cnf /my.cnf.tmpl
-RUN chmod 744 /my.cnf.tmpl
+RUN {
+      echo '[mysqld]'; \
+      echo 'user=root'; \
+      echo 'port=3306'; \
+      echo 'datadir=/var/lib/mysql/'; \
+      echo 'bind-address=0.0.0.0'; \
+      echo 'skip-networking=false'; \
+      echo 'innodb_data_file_path=./ibdata1:10M:autoextend'; \
+    } | tee etc/mysql/my.cnf
+RUN chmod 744 etc/mysql/my.cnf
 
 RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
 COPY ./conf/tmpl.sql /tmpl.sql
