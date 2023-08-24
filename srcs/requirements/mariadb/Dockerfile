@@ -11,8 +11,9 @@ RUN apk update && apk add --no-cache mariadb mariadb-client procps nano gettext
 RUN mkdir -p /var/run/mysqld \
     && chown -R mysql:mysql /var/run/mysqld
 
-COPY requirements/mariadb/conf/my.cnf etc/mysql/my.cnf
-RUN chmod 744 etc/mysql/my.cnf
+COPY requirements/mariadb/conf/my.cnf /my.cnf
+RUN chmod 744 /my.cnf
+RUN mv /my.cnf /etc/mysql/my.cnf
 
 # RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
 
