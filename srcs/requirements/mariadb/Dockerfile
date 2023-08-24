@@ -12,4 +12,6 @@ RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
 RUN mysql < /var/www/tmpl.sql
 RUN rm -f /var/www/tmpl.sql;
 
+USER mysql
+
 CMD ["mysqld"]
