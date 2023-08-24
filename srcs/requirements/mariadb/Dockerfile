@@ -9,7 +9,7 @@ RUN apk update && apk add --no-cache mariadb mariadb-client procps nano gettext
 # 2. & 3. skip caching for optimization and skip name checking (we only have one DB)
 # 4. Config for accepting remote connections
 RUN mkdir -p /var/run/mysqld \
-    && chmod  /var/run/mysqld;
+    && chmod 777 /var/run/mysqld;
 
 COPY requirements/mariadb/conf/my.cnf /my.cnf
 RUN ls -la
