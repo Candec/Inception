@@ -1,4 +1,4 @@
-FROM debian:10
+FROM debian:buster
 
 # Arguments to complete the following commands
 ARG PHP_VERSION=7.3 \
@@ -9,7 +9,7 @@ ARG PHP_VERSION=7.3 \
 # Packages to install
 RUN apt update && apt upgrade
 RUN apt install unzip
-RUN apt search php
+RUN apt install php7.3
 RUN apt install php-fpm
 RUN apt install php-mysql
 RUN apt install wget
