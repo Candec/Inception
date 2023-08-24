@@ -15,16 +15,11 @@ RUN apk update && apk add --no-cache mariadb mariadb-client
 # 4. Config for accepting remote connections
 RUN mkdir /var/run/mysqld; \
     chmod 777 /var/run/mysqld; \
-    { echo '[mysqld]'; \
-      echo 'skip-host-cache'; \
-      echo 'skip-name-resolve'; \
-      echo 'bind-address=0.0.0.0'; \
-    } | tee  /etc/my.cnf.d/docker.cnf; \
-    sed -i "s|skip-networking|skip-networking=0|g" \
-      /etc/my.cnf.d/mariadb-server.cnf
 
-# start DB installation
-RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
+COPY ./conf/my.cnf /my.cnf.tmpl
+
+RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
+COPY ./conf/tmpl.sql /tmpl.sql
 
 # Expose the port
 EXPOSE 3306

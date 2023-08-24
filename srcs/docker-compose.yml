@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 services:
   nginx:
@@ -9,6 +9,7 @@ services:
     depends_on:
       - wordpress
     ports:
+      - "80:80"
       - "443:443"
     networks:
       - inception
@@ -17,16 +18,22 @@ services:
       - ./requirements/nginx/tools:/etc/nginx/ssl/
       - wp-volume:/var/www/
     restart: always
+    enviroment:
+      NGINX_WORDPRESS_CONTAINER_NAME: ${NGINX_WP_CONTAINER_NAME}
+      WORDPRESS_PORT: ${NGINX_WP_PORT}
+      DOMAIN_NAME: ${DOMAIN_NAME}
 
   mariadb:
     build:
       context: .
       dockerfile: requirements/mariadb/Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_PASS: ${DB_PASS}
-        DB_ROOT: ${DB_ROOT}
+      enviroment:
+        WORDPRESS_DB_NAME:  ${WP_DB_NAME}
+        MARIADB_HOST:       ${MDB_HOST}
+        MARIADB_PORT:       ${MDB_PORT}
+        MARIADB_USER_NAME:  ${MDB_USER_USR}
+        MARIADB_USER_PASS:  ${MDB_USER_PWD}
+        MARIADB_ROOT_PASS:  ${MDB_ROOT_PWD}
     container_name: mariadb
     ports:
       - "3306:3306"
@@ -38,10 +45,19 @@ services:
     build:
       context: .
       dockerfile: requirements/wordpress/Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_PASS: ${DB_PASS}
+      enviroment:
+        MYSQL_DATABASE: ${WP_DB_NAME}
+        MYSQL_USER: ${MDB_USER_USR}
+        MYSQL_PASSWORD: ${MDB_ROOT_PWD}
+        MYSQL_DB_HOST: ${MDB_HOST}
+        ADMIN_USER: ${WP_DB_USER_USR}
+        ADMIN_PASSWORD: ${WP_DB_ROOT_PWD}
+        ADMIN_EMAIL: ${WP_ROOT_EMAIL}
+        WP_TITLE: ${WP_TITLE}
+        DOMAIN_NAME: ${DOMAIN_NAME}
+        WP_USER_LOGIN: ${WP_USER_LOG}
+        WP_USER_EMAIL: ${WP_USER_EMAIL}
+        WP_USER_PASS: ${MP_USER_PASS}
     container_name: wordpress
     depends_on:
       - mariadb
