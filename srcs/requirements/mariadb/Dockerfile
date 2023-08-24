@@ -9,7 +9,7 @@ RUN apk update && apk add --no-cache mariadb mariadb-client
 # 2. & 3. skip caching for optimization and skip name checking (we only have one DB)
 # 4. Config for accepting remote connections
 RUN mkdir -p /var/run/mysqld; \
-    chmod 777 /var/run/mysqld;
+    chown -R mysql:mysql /var/run/mysqld
 
 COPY ./conf/my.cnf /my.cnf.tmpl
 
