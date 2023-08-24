@@ -11,7 +11,7 @@ RUN apt update && apt upgrade && apt intall \
     wget \
     unzip \
     php${PHP_VERSION} \
-    php${PHP_VERSION}-fpm
+    php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-mysqli \
     php${PHP_VERSION}-json \
     php${PHP_VERSION}-curl \
