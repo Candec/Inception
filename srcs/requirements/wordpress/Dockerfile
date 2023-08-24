@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM debian:10
 
 # Arguments to complete the following commands
 ARG PHP_VERSION=82 \
@@ -7,7 +7,7 @@ ARG PHP_VERSION=82 \
     DB_PASS
 
 # Packages to install
-RUN apk update && apk upgrade && apk add --no-cache \
+RUN apt update && apt upgrade && apk intall \
     wget \
     unzip \
     php${PHP_VERSION} \
@@ -41,7 +41,7 @@ RUN cp -rf wordpress/* .
 RUN rm -rf wordpress latest.zip
 
 # Copies, run and delete a wp config script
-COPY ./requirements/wordpress/conf/wp-config-create.sh .
+COPY .conf/wp-config-create.sh .
 RUN sh wp-config-create.sh && rm wp-config-create.sh
 
 # Gives permision to all users
