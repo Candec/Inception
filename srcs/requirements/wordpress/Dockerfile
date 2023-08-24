@@ -7,13 +7,7 @@ ARG PHP_VERSION=7.3 \
     DB_PASS
 
 # Packages to install
-RUN apt update && apt upgrade
-RUN apt install unzip
-RUN apt install php7.3
-RUN apt install php-fpm
-RUN apt install php-mysql
-RUN apt install wget
-RUN apt install sendmail
+RUN apt-get update && apt-get upgrade && apt-get unzip php7.3 php-fpm php-mysql wget sendmail
 
 # Config configuration
 RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
