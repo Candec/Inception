@@ -1,7 +1,7 @@
 FROM alpine:3.18
 
 # update the packages and installs maria db and its client
-RUN apk update && apk add --no-cache mariadb mariadb-client procps nano
+RUN apk update && apk add --no-cache mariadb mariadb-client procps nano gettext
 
 # write into a file located at /var/run/mysqld the echo commands
 # which are going to be used to configured maria db
