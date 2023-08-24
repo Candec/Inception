@@ -1,6 +1,6 @@
-FROM alpine:3.18
+FROM debian:10
 
-RUN apk update && apk add --no-cache mysql-server mysql-client
+RUN apt update && apt -y install --no-cache mysql-server mysql-client
 
 EXPOSE 3306
 
