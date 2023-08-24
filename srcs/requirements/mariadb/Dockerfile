@@ -1,17 +1,13 @@
-FROM debian:10
+FROM debian:buster
 
-RUN apt update && apt -y install mariadb-server mariadb-client
+RUN apt-get update
+RUN apt-get install -y mariadb-server
 
 EXPOSE 3306
 
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/
 COPY ./tools /var/www/
 
-RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
-
-RUN mysql < /var/www/tmpl.sql
-RUN rm -f /var/www/tmpl.sql;
-
-USER mysql
+RUN service mysql start && mysql < /var/www/tmpl.sql && rm -f /var/www/tmpl.sql;
 
 CMD ["mysqld"]
