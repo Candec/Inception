@@ -11,20 +11,11 @@ RUN apk update && apk add --no-cache mariadb mariadb-client procps nano
 RUN mkdir -p /var/run/mysqld \
     && chown -R mysql:mysql /var/run/mysqld
 
-RUN { echo '[mysqld]'; \
-      echo 'user=root'; \
-      echo 'port=3306'; \
-      echo 'datadir=/var/lib/mysql/'; \
-      echo 'bind-address=0.0.0.0'; \
-      echo 'skip-networking=false'; \
-      echo 'innodb_data_file_path=./ibdata1:10M:autoextend'; \
-    } | tee /etc/my.cnf.d/docker.cnf;
-RUN chmod 744 /etc/my.cnf.d/docker.cnf;
-
 COPY requirements/mariadb/conf/my.cnf /my.cnf.tmpl
 RUN chmod 744 /my.cnf.tmpl
+
 RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
-COPY ./conf/tmpl.sql /tmpl.sql
+COPY requirements/mariadb/conf/tmpl.sql /tmpl.sql
 
 # Expose the port
 EXPOSE 3306
