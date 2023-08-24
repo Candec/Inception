@@ -1,7 +1,7 @@
 
 -- Create user for the login, set the password and grant the privilages
 CREATE USER IF NOT EXISTS '$MDB_USER_USR'@'%' IDENTIFIED BY '$MDB_USER_PWD';
-GRANT ALL PRIVILEGES ON WORDPRESS.* TO '$MDB_USER_USR'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON '$WP_DB_NAME'.* TO '$MDB_USER_USR'@'%' WITH GRANT OPTION;
 
 -- Drop test table
 -- DROP TABLE WHERE '%test%'
