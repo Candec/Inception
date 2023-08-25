@@ -12,6 +12,6 @@ RUN chmod +r /var/www/html
 RUN sh /var/www/html/start_nginx.sh
 RUN chmod +x /var/www/html
 
-COPY .conf/default.conf.tmpl /etc/nginx/conf.d/default.conf
+RUN mv /default.conf.tmpl /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
