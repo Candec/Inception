@@ -4,9 +4,7 @@ RUN apt-get install -y nginx openssl
 
 EXPOSE 443
 
-
-
-COPY ./conf/nginx.conf /etc/nginx/sites-enabled/nginx.conf
+COPY ./conf/nginx /etc/nginx/sites-enabled/nginx
 COPY ./tools/start_nginx.sh /var/www
 
 CMD ["nginx", "-g", "daemon off;"]
