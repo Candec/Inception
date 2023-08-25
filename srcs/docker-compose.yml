@@ -1,5 +1,20 @@
 version: '3.5'
 
+volumes:
+  wp-volume:
+    name: wp
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/Inception/data/wordpress
+
+  db-volume:
+    name: db
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/Inception/data/mariadb
+
 services:
 
   nginx:
@@ -44,21 +59,6 @@ services:
     restart: always
     volumes:
       - wp:/var/www/html
-
-volumes:
-  wp-volume:
-    name: wp
-    driver_opts:
-      o: bind
-      type: none
-      device: /home/${USER}/Inception/data/wordpress
-
-  db-volume:
-    name: db
-    driver_opts:
-      o: bind
-      type: none
-      device: /home/${USER}/Inception/data/mariadb
 
 networks:
     inception:
