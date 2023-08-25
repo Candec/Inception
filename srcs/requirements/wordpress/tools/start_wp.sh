@@ -15,8 +15,8 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 	wp core download --allow-root;
 	mv /var/www/wp-config.php /var/www/html/
 	echo "Wordpress: creating users..."
-	wp core install --allow-root --url=${DOMAIN_NAME} --title=${WP_TITLE} --admin_user=${WP_DB_ROOT_USR} --admin_password=${WP_DB_ROOT_PWD} --admin_email=${WP_ROOT_EMAIL}
-	wp user create --allow-root ${WP_USER_USR} ${WP_USER_EMAIL} --user_pass=${WP_USER_PWD};
+	wp core install --allow-root --url=https//$DOMAIN_NAME --title=${WP_TITLE} --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL
+	wp user create --allow-root $WP_USER_LOGIN $WP_USER_EMAIL --user_pass=$WP_USER_PASS --role=author;
 	wp theme install inspiro --activate --allow-root
 fi
 
