@@ -5,7 +5,7 @@
  */
 
 // The name of the database for WordPress
-define( 'DB_NAME', $WP_DB_NAME );
+define( 'DB_NAME', $MDB_DB_NAME );
 
 // Database username
 define( 'DB_USER', $MDB_USER_USR );
@@ -14,7 +14,7 @@ define( 'DB_USER', $MDB_USER_USR );
 define( 'DB_PASSWORD', $MDB_USER_PWD );
 
 // Database hostname
-define( 'DB_HOST', 'mariadb' );
+define( 'DB_HOST', $MDB_HOST );
 
 // Database charset to use in creating database tables.
 define( 'DB_CHARSET', 'utf8' );
