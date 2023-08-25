@@ -2,10 +2,8 @@ version: '3.5'
 
 services:
   nginx:
-    build:
-      context: .
-      dockerfile: requirements/nginx/Dockerfile
     container_name: nginx
+    build: requirements/nginx/
     depends_on:
       - wordpress
     ports:
