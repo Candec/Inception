@@ -5,13 +5,13 @@
  */
 
 // The name of the database for WordPress
-define( 'DB_NAME', 'wordpress' );
+define( 'DB_NAME', $WP_DB_NAME );
 
 // Database username
-define( 'DB_USER', 'jibanez-' );
+define( 'DB_USER', $MDB_USER_USR );
 
 // Database password
-define( 'DB_PASSWORD', '12345' );
+define( 'DB_PASSWORD', $MDB_USER_PWD );
 
 // Database hostname
 define( 'DB_HOST', 'mariadb' );
