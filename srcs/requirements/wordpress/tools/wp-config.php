@@ -5,16 +5,16 @@
  */
 
 // The name of the database for WordPress
-define( 'DB_NAME', $MDB_DB_NAME );
+define( 'DB_NAME', getenv('MYSQL_DATABASE') );
 
 // Database username
-define( 'DB_USER', $MDB_USER_USR );
+define( 'DB_USER', getenv('MYSQL_USER') );
 
 // Database password
-define( 'DB_PASSWORD', $MDB_USER_PWD );
+define( 'DB_PASSWORD', getenv('MYSQL_PASSWORD') );
 
 // Database hostname
-define( 'DB_HOST', $MDB_HOST );
+define( 'DB_HOST', getenv('MYSQL_DB_HOST') );
 
 // Database charset to use in creating database tables.
 define( 'DB_CHARSET', 'utf8' );
