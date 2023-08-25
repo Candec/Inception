@@ -43,7 +43,7 @@ services:
       - ${NGINX_WP_PORT}
     restart: always
     volumes:
-      - wp-volume:/var/www/html
+      - wp:/var/www/html
 
 volumes:
   wp-volume:
