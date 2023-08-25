@@ -1,7 +1,7 @@
 server {
     listen 443 ssl;
     server_name jibanez-.42.fr www.jibanez-.42.fr;
-    root /var/www/html;
+    root /var/www;
     index index.php;
     ssl_certificate /etc/nginx/ssl/jibanez-.42.fr.crt;
     ssl_certificate_key /etc/nginx/ssl/jibanez-.42.fr.key;
