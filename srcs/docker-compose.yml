@@ -40,7 +40,7 @@ services:
       - inception
     restart: on-failure
     volumes:
-      - /var/lib/mysql
+      - db-volume:/var/lib/mysql
     init: true
 
   wordpress:
