@@ -46,7 +46,7 @@ services:
     networks:
       - inception
     ports:
-      - ${NGINX_WP_PORT}
+      - ${NGINX_WORDPRESS_PORT}
     restart: always
     volumes:
       - wp-volume:/var/www/html
