@@ -15,20 +15,6 @@ volumes:
 
 services:
 
-  nginx:
-    container_name: nginx
-    build: requirements/nginx/
-    depends_on:
-      - wordpress
-    ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - inception
-    volumes:
-      - wp-volume:/var/www/html
-    restart: always
-
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
@@ -57,6 +43,20 @@ services:
     restart: always
     volumes:
       - wp-volume:/var/www/html
+
+  nginx:
+    container_name: nginx
+    build: requirements/nginx/
+    depends_on:
+      - wordpress
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - inception
+    volumes:
+      - wp-volume:/var/www/html
+    restart: always
 
 networks:
     inception:
