@@ -4,6 +4,6 @@ RUN	apk update && apk upgrade && apk add --no-cache \
         mariadb \
         mariadb-client
 
-COPY requirements/mariadb/tools/create_db.sh /tmp/configure.sh
+COPY tools/create_db.sh /tmp/configure.sh
 
 ENTRYPOINT ["sh", "/tmp/configure.sh"]
