@@ -25,7 +25,7 @@ define( 'DB_NAME', $DB_NAME );
 /** Database username */
 define( 'DB_USER', $DB_USER );
 
-/** DaStabase password */
+/** Database password */
 define( 'DB_PASSWORD', $DB_PASS );
 
 /** Database hostname */
