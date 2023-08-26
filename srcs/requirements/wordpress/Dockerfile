@@ -58,7 +58,7 @@ COPY ./requirements/wordpress/conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 # Copies, run and delete a wp config script
 COPY ./requirements/wordpress/tools/wp-config-create.sh .
-# RUN sh wp-config-create.sh && rm wp-config-create.sh
+RUN sh wp-config-create.sh && rm wp-config-create.sh
 
 # Gives permision to all users
 RUN chmod -R 0777 wp-content/
