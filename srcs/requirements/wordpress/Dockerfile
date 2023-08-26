@@ -32,6 +32,7 @@ RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm
 # Clear de cache
 RUN rm -f /var/cache/apk/*
 
+# Installs wp command for the setup
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
@@ -44,8 +45,15 @@ RUN wget https://wordpress.org/latest.zip
 RUN unzip latest.zip
 RUN rm -rf latest.zip
 
+WORKDIR /var/www/html/wordpress
+COPY .requirements/wordpress/conf/ .
+RUN chown -R www-data:www-data /var/www/html/wordpress
+
+COPY /conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
+
+
 # Copies, run and delete a wp config script
-COPY ./requirements/wordpress/conf/wp-config-create.sh .
+COPY ./requirements/wordpress/tools/wp-config-create.sh .
 RUN sh wp-config-create.sh && rm wp-config-create.sh
 
 # Gives permision to all users
