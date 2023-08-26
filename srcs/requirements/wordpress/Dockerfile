@@ -47,7 +47,7 @@ WORKDIR /var/www/html/
 
 # Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
 RUN wget https://wordpress.org/latest.tar.gz
-RUN tar -xvzf latest.zip
+RUN tar -xvzf latest.tar.gz
 RUN rm -rf latest.tar.gz
 
 WORKDIR /var/www/html/wordpress
