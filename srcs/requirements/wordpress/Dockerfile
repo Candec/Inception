@@ -46,7 +46,7 @@ RUN unzip latest.zip
 RUN rm -rf latest.zip
 
 WORKDIR /var/www/html/wordpress
-COPY .requirements/wordpress/conf/ .
+COPY /conf/ .
 RUN chown -R www-data:www-data /var/www/html/wordpress
 
 COPY /conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
