@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM debian:10.11
 
 # Arguments to complete the following commands
 ARG PHP_VERSION=82 \
@@ -7,14 +7,26 @@ ARG PHP_VERSION=82 \
     DB_PASS
 
 # Packages to install
-RUN apk update && apk upgrade && apk add --no-cache \
-    wget \
-    unzip \
-    curl
-RUN apk add --no-cache php7.3-cli php7.3-fpm php7.3-mysql php7.3-json php7.3-opcache \
-                    php7.3-mbstring php7.3-xml php7.3-cgi php-pear php7.3-zip \
-                    php-net-socket php7.3-common php7.3-gd php7.3-curl \
-                    php-xml-util php7.3-gettext php7.3-bcmath
+RUN apt-get update -yq
+
+RUN apt-get install curl -yq
+RUN apt-get install wget -yq
+RUN apt-get install php7.3-cli \
+                    php7.3-fpm \
+                    php7.3-mysql \
+                    php7.3-json \
+                    php7.3-opcache \
+                    php7.3-mbstring \
+                    php7.3-xml \
+                    php7.3-cgi \
+                    php-pear php7.3-zip \
+                    php-net-socket \
+                    php7.3-common \
+                    php7.3-gd \
+                    php7.3-curl \
+                    php-xml-util \
+                    php7.3-gettext \
+                    php7.3-bcmath -yq
 
 
     # php${PHP_VERSION} \
@@ -31,9 +43,9 @@ RUN apk add --no-cache php7.3-cli php7.3-fpm php7.3-mysql php7.3-json php7.3-opc
     # php${PHP_VERSION}-zip
 
 # Config configuration
-RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
-RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php82/php-fpm.d/www.conf
-RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm.d/www.conf
+RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php73/php-fpm.d/www.conf
+RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php73/php-fpm.d/www.conf
+RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php73/php-fpm.d/www.conf
 
 # Clear de cache
 RUN rm -f /var/cache/apk/*
