@@ -39,7 +39,6 @@ COPY requirements/mariadb/conf/tmpl.sql /tmpl.sql
 COPY requirements/mariadb/tools/create_db.sh .
 RUN sh create_db.sh && rm create_db.sh
 
-USER mysql
+VOLUME [ "/sys/fs/cgroup" ]
 
-# start DB, quietly please
-CMD ["/usr/bin/mysqld"]
+ENTRYPOINT [ "bash", "/run.sh" ]
