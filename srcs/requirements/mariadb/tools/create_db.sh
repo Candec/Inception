@@ -1,5 +1,7 @@
 #!bin/sh
 
+set -x
+
 # Checks if mysql is running by cheking if there is a database called mysql
 if [ ! -d "/var/lib/mysql/mysql" ]; then
 
