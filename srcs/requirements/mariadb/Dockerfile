@@ -27,8 +27,8 @@ RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
 
 COPY ./conf/tmpl.sql /tmpl.sql
 
-COPY ./tools/run.sh /run.sh
+COPY ./tools/config_db.sh /config_db.sh
 
 VOLUME [ "/sys/fs/cgroup" ]
 
-ENTRYPOINT [ "bash", "/run.sh" ]
+ENTRYPOINT [ "bash", "/config_db.sh" ]
