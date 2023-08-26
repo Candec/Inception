@@ -3,7 +3,14 @@ FROM debian:10.11
 # Arguments to complete the following commands
 ARG DB_NAME \
     DB_USER \
-    DB_PASS
+    DB_PASS \
+    DOMAIN_NAME \
+    WP_TITLE \
+    ADMIN_USER \
+    ADMIN_PASSWORD \
+    ADMIN_EMAIL \
+    WP_USER_LOGIN \
+    WP_USER_EMAIL
 
 # Packages to install
 RUN apt-get update -yq
@@ -55,8 +62,6 @@ COPY ./requirements/wordpress/conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 # Copies, run and delete a wp config script
 COPY ./requirements/wordpress/tools/wp-config-create.sh .
-
-RUN env
 RUN sh wp-config-create.sh && rm wp-config-create.sh
 
 # Gives permision to all users
