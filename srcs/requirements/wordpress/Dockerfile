@@ -40,6 +40,10 @@ RUN unzip latest.zip
 RUN cp -rf wordpress/* .
 RUN rm -rf wordpress latest.zip
 
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
+
 # Copies, run and delete a wp config script
 COPY ./requirements/wordpress/conf/wp-config-create.sh .
 RUN sh wp-config-create.sh && rm wp-config-create.sh
