@@ -1,73 +1,74 @@
-FROM debian:10.11
+FROM alpine:3.13
 
-# Arguments to complete the following commands
-ARG DB_NAME \
-    DB_USER \
-    DB_PASS \
-    DB_ROOT \
-    DOMAIN_NAME \
-    WP_TITLE \
-    WP_ADMIN_USER \
-    WP_ADMIN_PASSWORD \
-    WP_ADMIN_EMAIL \
-    WP_USER_LOGIN \
-    WP_USER_EMAIL \
-    WP_USER_PASS
+RUN	apk update && apk upgrade && apk add --no-cache \
+		wget				\
+        tar                 \
+		mariadb-client		\
+		redis				\
+		# Wordpress core depencencies
+		php7				\
+		php7-fpm			\
+		php7-bcmath			\
+		php7-bz2 			\
+		php7-calendar		\
+		php7-ctype			\
+		php7-curl			\
+		php7-dom			\
+		php7-exif			\
+		php7-fileinfo		\
+		php7-gd				\
+		php7-gmagick		\
+		php7-gmp			\
+		php7-iconv			\
+		php7-imap			\
+		php7-intl			\
+		php7-json			\
+		php7-mbstring		\
+		php7-mcrypt			\
+		php7-memcache		\
+		php7-mysqli			\
+		php7-mysqlnd		\
+		php7-openssl		\
+		php7-pcntl			\
+		php7-pdo			\
+		php7-pdo_mysql		\
+		php7-pdo_pgsql		\
+		php7-pdo_sqlite 	\
+		php7-pgsql			\
+		php7-phar			\
+		php7-posix			\
+		php7-session		\
+		php7-shmop			\
+		php7-simplexml		\
+		php7-soap			\
+		php7-sockets		\
+		php7-sodium			\
+		php7-sqlite3		\
+		php7-sysvsem		\
+		php7-sysvshm		\
+		php7-tokenizer		\
+		php7-xml			\
+		php7-xmlreader		\
+		php7-xmlwriter		\
+		php7-xsl			\
+		php7-zip			\
+		php7-zlib
 
-# Packages to install
-RUN apt-get update -yq
 
-RUN apt-get install curl -yq
-RUN apt-get install wget -yq
-RUN apt-get install php7.3-cli \
-                    php7.3-fpm \
-                    php7.3-mysql \
-                    php7.3-json \
-                    php7.3-opcache \
-                    php7.3-mbstring \
-                    php7.3-xml \
-                    php7.3-cgi \
-                    php7.3-zip \
-                    php7.3-common \
-                    php7.3-gd \
-                    php7.3-curl \
-                    php7.3-gettext \
-                    php7.3-bcmath \
-                    php-net-socket \
-                    php-xml-util \
-                    php-pear -yq
+# php config
+RUN	adduser -S nginx &&	addgroup -S nginx
+COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
+COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
 
-# RUN ls -la /etc/php/7.3/fpm/conf.d
-# Config configuration
-RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php/7.3/fpm/pool.d/www.conf
-RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php/7.3/fpm/pool.d/www.conf
-RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php/7.3/fpm/pool.d/www.conf
+# static website
+COPY conf/index.html /tmp/index.html
 
-# Installs wp command for the setup
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+# install wordpress
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp
-
-# Change Directory
-WORKDIR /var/www/html/
-
-# Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
-RUN wget https://wordpress.org/latest.tar.gz
-RUN tar -xvzf latest.tar.gz
-RUN rm -rf latest.tar.gz
+RUN cp wp-cli.phar /usr/bin/wp
 
 WORKDIR /var/www/html/wordpress
-COPY ./requirements/wordpress/conf .
-COPY ./requirements/wordpress/conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
-# RUN chown -R www-data:www-data /var/www/html/wordpress
-
-# Copies, run and delete a wp config script
-COPY ./requirements/wordpress/tools/wp-config-create.sh .
-RUN sh wp-config-create.sh && rm wp-config-create.sh
-
-# Gives permision to all users
-RUN chmod -R 0777 wp-content/
-
-# Builds PHP version 7.3
-CMD ["/usr/sbin/php-fpm7.3", "-F"]
+COPY tools/configure.sh /tmp/configure.sh
+ENTRYPOINT [ "sh", "/tmp/configure.sh" ]

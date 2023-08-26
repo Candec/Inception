@@ -18,47 +18,51 @@ services:
       - wp-volume:/var/www/
     restart: always
 
+    wordpress:
+      build: requirements/wordpress/
+      container_name: wordpress
+      ports:
+        - "9000:9000"
+      volumes:
+        - wp-volume:/var/www/html
+      depends_on:
+        - mariadb
+        - redis
+      networks:
+        - frontend
+        - backend
+      restart: always
+      environment:
+        MYSQL_HOST:       ${MYSQL_HOST}
+        WP_DATABASE_NAME: ${WP_DATABASE_NAME}
+        WP_DATABASE_USR:  ${WP_DATABASE_USR}
+        WP_DATABASE_PWD:  ${WP_DATABASE_PWD}
+        DOMAIN_NAME:      ${DOMAIN_NAME}
+        WP_TITLE:         ${WP_TITLE}
+        WP_ADMIN_USR:     ${WP_ADMIN_USR}
+        WP_ADMIN_PWD:     ${WP_ADMIN_PWD}
+        WP_ADMIN_EMAIL:   ${WP_ADMIN_EMAIL}
+        WP_USR:           ${WP_USR}
+        WP_PWD:           ${WP_PWD}
+        WP_EMAIL:         ${WP_EMAIL}
+        REDIS_HOST:       ${REDIS_HOST}
+        REDIS_PWD:        ${REDIS_PWD}
+
   mariadb:
-    build:
-      context: .
-      dockerfile: requirements/mariadb/Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_PASS: ${DB_PASS}
-        DB_ROOT: ${DB_ROOT}
+    build: requirements/mariadb/
     container_name: mariadb
     ports:
       - "3306:3306"
-    networks:
-      - inception
-    restart: always
-
-  wordpress:
-    build:
-      context: .
-      dockerfile: requirements/wordpress/Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_PASS: ${DB_PASS}
-        DB_ROOT: ${DB_ROOT}
-        DOMAIN_NAME: ${DOMAIN_NAME}
-        WP_TITLE: ${WP_TITLE}
-        WP_ADMIN_USER: ${WP_ADMIN_USER}
-        WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
-        WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
-        WP_USER_LOGIN: ${WP_USER_LOGIN}
-        WP_USER_EMAIL: ${WP_USER_EMAIL}
-        WP_USER_PASS: ${WP_USER_PASS}
-    container_name: wordpress
-    depends_on:
-      - mariadb
-    networks:
-      - inception
-    restart: always
     volumes:
-      - wp-volume:/var/www/
+      - db-volume:/var/lib/mysql
+    networks:
+      - backend
+    restart: always
+    environment:
+      MYSQL_ROOT_PWD:   ${MYSQL_ROOT_PWD}
+      WP_DATABASE_NAME: ${WP_DATABASE_NAME}
+      WP_DATABASE_USR:  ${WP_DATABASE_USR}
+      WP_DATABASE_PWD:  ${WP_DATABASE_PWD}
 
 volumes:
   wp-volume:
