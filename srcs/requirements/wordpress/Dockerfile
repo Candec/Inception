@@ -71,8 +71,9 @@ RUN cp wp-cli.phar /usr/bin/wp
 RUN wget https://wordpress.org/latest.tar.gz
 RUN tar -xvzf latest.tar.gz
 RUN rm latest.tar.gz
-RUN chmod +x /var/html
 WORKDIR /var/www/html/wordpress
+RUN chmod +x /var/html
+
 
 COPY tools/configure.sh /tmp/configure.sh
 ENTRYPOINT [ "sh", "/tmp/configure.sh" ]
