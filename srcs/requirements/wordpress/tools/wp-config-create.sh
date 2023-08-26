@@ -4,7 +4,7 @@ set -x
 
 cd /var/www/html/wordpress
 
-echo getenv('MYSQL_DATABASE')
+echo getenv ${'MYSQL_DATABASE'}
 echo $'MYSQL_DATABASE'
 
 if ! wp core is-installed --allow-root; then
