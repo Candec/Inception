@@ -28,11 +28,11 @@ RUN apt-get install php7.3-cli \
                     php-xml-util \
                     php-pear -yq
 
-RUN ls -la /etc/php/7.3/fpm/conf.d
+# RUN ls -la /etc/php/7.3/fpm/conf.d
 # Config configuration
-# RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php73/php-fpm.d/www.conf
-# RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php73/php-fpm.d/www.conf
-# RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php73/php-fpm.d/www.conf
+RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php/7.3/fpm/pool.d/www.conf
+RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php/7.3/fpm/pool.d/www.conf
+RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php/7.3/fpm/pool.d/www.conf
 
 # Clear de cache
 RUN rm -f /var/cache/apk/*
@@ -58,10 +58,10 @@ COPY ./requirements/wordpress/conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 # Copies, run and delete a wp config script
 COPY ./requirements/wordpress/tools/wp-config-create.sh .
-RUN sh wp-config-create.sh && rm wp-config-create.sh
+# RUN sh wp-config-create.sh && rm wp-config-create.sh
 
 # Gives permision to all users
 RUN chmod -R 0777 wp-content/
 
-# Builds PHP version 8.2
+# Builds PHP version 7.3
 CMD ["/usr/sbin/php-fpm7.3", "-F"]
