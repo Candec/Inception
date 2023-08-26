@@ -42,3 +42,5 @@ RUN sh create_db.sh && rm create_db.sh
 VOLUME [ "/sys/fs/cgroup" ]
 
 ENTRYPOINT [ "bash", "/run.sh" ]
+
+RUN exec mysqld --user=mysql --datadir="/var/lib/mysql" --port=3306 --init-file /init.sql $@

@@ -37,4 +37,4 @@ fi
 
 cat tmpl.sql | envsubst > /init.sql
 
-exec mysqld --user=mysql --datadir="/var/lib/mysql" --port=3306 --init-file /init.sql $@
+
