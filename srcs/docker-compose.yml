@@ -43,8 +43,8 @@ services:
         DB_USER: ${DB_USER}
         DB_PASS: ${DB_PASS}
     environment:
-      - DOMAIN_NAME: ${DOMAIN_NAME}
-      - WP_TITLE: ${WP_TITLE}
+      - DOMAIN_NAME='${DOMAIN_NAME}'
+      - WP_TITLE='${WP_TITLE}'
       - ADMIN_USER: ${ADMIN_USER}
       - ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       - ADMIN_EMAIL: ${ADMIN_EMAIL}
