@@ -7,13 +7,8 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
         chown -R mysql:mysql /var/lib/mysql
 
         # init database
-        mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm
+        mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql
 
-        # Checks if mktemp directory exists
-        tfile=`mktemp`
-        if [ ! -f "$tfile" ]; then
-                return 1
-        fi
 fi
 
 # Checks if there is a wordpress database, and creates it in case it doesn't.
@@ -37,3 +32,7 @@ EOF
         /usr/bin/mysqld --user=mysql --bootstrap < /tmp/create_db.sql
         rm -f /tmp/create_db.sql
 fi
+
+cat tmpl.sql | envsubst > /init.sql
+
+exec mysqld --user=mysql --datadir="/var/lib/mysql" --port=3306 --init-file /init.sql $@
