@@ -45,11 +45,11 @@ services:
     environment:
       - DOMAIN_NAME='${DOMAIN_NAME}'
       - WP_TITLE='${WP_TITLE}'
-      - ADMIN_USER: ${ADMIN_USER}
-      - ADMIN_PASSWORD: ${ADMIN_PASSWORD}
-      - ADMIN_EMAIL: ${ADMIN_EMAIL}
-      - WP_USER_LOGIN: ${WP_USER_LOGIN}
-      - WP_USER_EMAIL: ${WP_USER_EMAIL}
+      - ADMIN_USER='${ADMIN_USER}'
+      - ADMIN_PASSWORD='${ADMIN_PASSWORD}'
+      - ADMIN_EMAIL='${ADMIN_EMAIL}'
+      - WP_USER_LOGIN='${WP_USER_LOGIN}'
+      - WP_USER_EMAIL='${WP_USER_EMAIL}'
     container_name: wordpress
     depends_on:
       - mariadb
