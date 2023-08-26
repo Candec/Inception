@@ -39,6 +39,13 @@ services:
       context: .
       dockerfile: requirements/wordpress/Dockerfile
       args:
+        DOMAINE_NAME: ${DOMAIN_NAME}
+        WP_TITLE: ${WP_TITLE}
+        ADMIN_USER: ${ADMIN_USER}
+        ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+        ADMIN_EMAIL: ${ADMIN_EMAIL}
+        WP_USER_LOGIN: ${WP_USER_LOGIN}
+        WP_USER_EMAIL: ${WP_USER_EMAIL}
         DB_NAME: ${DB_NAME}
         DB_USER: ${DB_USER}
         DB_PASS: ${DB_PASS}
