@@ -74,6 +74,7 @@ RUN tar -xvzf latest.tar.gz
 RUN rm latest.tar.gz
 WORKDIR /var/www/html/wordpress
 RUN chmod +x /var/www/html
+RUN mv index.php ../.
 
 
 COPY tools/configure.sh /tmp/configure.sh
