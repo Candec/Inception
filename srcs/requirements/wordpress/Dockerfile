@@ -46,9 +46,9 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 WORKDIR /var/www/html/
 
 # Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
-RUN wget https://wordpress.org/latest.zip
-RUN unzip latest.zip
-RUN rm -rf latest.zip
+RUN wget https://wordpress.org/latest.tar.gz
+RUN tar -xvzf latest.zip
+RUN rm -rf latest.tar.gz
 
 WORKDIR /var/www/html/wordpress
 COPY ./requirements/wordpress/conf .
