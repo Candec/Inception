@@ -6,6 +6,4 @@ RUN	apk update && apk upgrade && apk add --no-cache \
 
 COPY tools/create_db.sh /tmp/create_db.sh
 
-RUN chmod +x /var/html
-
 ENTRYPOINT ["sh", "/tmp/create_db.sh"]
