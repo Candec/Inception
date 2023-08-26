@@ -43,4 +43,4 @@ VOLUME [ "/sys/fs/cgroup" ]
 
 ENTRYPOINT [ "bash", "/run.sh" ]
 RUN cat init.sql
-RUN /usr/bin/mysqld --user=mysql --bootstrap < /init.sql
+RUN mysqld --user=mysql --bootstrap < /init.sql
