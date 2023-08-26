@@ -47,9 +47,9 @@ RUN rm -rf latest.zip
 
 WORKDIR /var/www/html/wordpress
 COPY ./requirements/wordpress/conf .
-RUN chown -R www-data:www-data /var/www/html/wordpress
-
 COPY /conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
+
+RUN chown -R www-data:www-data /var/www/html/wordpress
 
 
 # Copies, run and delete a wp config script
