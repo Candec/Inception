@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -x
 # wait for mysql
 while ! mariadb -h$MYSQL_HOST -u$WP_DATABASE_USR -p$WP_DATABASE_PWD $WP_DATABASE_NAME &>/dev/null; do
     sleep 3
