@@ -32,18 +32,17 @@ RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm
 # Clear de cache
 RUN rm -f /var/cache/apk/*
 
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
+
 # Change Directory
-WORKDIR /var/www
+WORKDIR /var/www/html/
 
 # Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
 RUN wget https://wordpress.org/latest.zip
 RUN unzip latest.zip
-RUN cp -rf wordpress/* .
-RUN rm -rf wordpress latest.zip
-
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp
+RUN rm -rf latest.zip
 
 # Copies, run and delete a wp config script
 COPY ./requirements/wordpress/conf/wp-config-create.sh .
