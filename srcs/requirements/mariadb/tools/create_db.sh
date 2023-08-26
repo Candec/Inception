@@ -1,43 +1,47 @@
 #!bin/sh
 
-set -x
-
-# Checks if mysql is running by cheking if there is a database called mysql
-if [ ! -d "/var/lib/mysql/mysql" ]; then
-
-        # Gives the own rights to mysql group
-        chown -R mysql:mysql /var/lib/mysql
-
-        # init database
-        mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql
-
+if [ ! -d "/run/mysqld" ]; then
+	mkdir -p /run/mysqld
+	chown -R mysql:mysql /run/mysqld
 fi
 
-# Checks if there is a wordpress database, and creates it in case it doesn't.
-# It also add the users root and {user} to the wordpress DB group
-if [ ! -d "/var/lib/mysql/wordpress" ]; then
+if [ ! -d "/var/lib/mysql/mysql" ]; then
 
-        cat << EOF > /tmp/create_db.sql
+	chown -R mysql:mysql /var/lib/mysql
+
+	# init database
+	mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
+
+	tfile=`mktemp`
+	if [ ! -f "$tfile" ]; then
+		return 1
+	fi
+
+	# https://stackoverflow.com/questions/10299148/mysql-error-1045-28000-access-denied-for-user-billlocalhost-using-passw
+	cat << EOF > $tfile
 USE mysql;
 FLUSH PRIVILEGES;
-DELETE FROM mysql.user WHERE User='';
+
+DELETE FROM	mysql.user WHERE User='';
 DROP DATABASE test;
 DELETE FROM mysql.db WHERE Db='test';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT}';
-CREATE DATABASE ${DB_NAME} CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER '${DB_USER}'@'%' IDENTIFIED by '${DB_PASS}';
-GRANT ALL PRIVILEGES ON wordpress.* TO '${DB_USER}'@'%';
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PWD';
+
+CREATE DATABASE $DB_NAME CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE USER '$DB_USER'@'%' IDENTIFIED by '$DB_PASS';
+GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';
+
 FLUSH PRIVILEGES;
 EOF
-        # run init.sql
-        /usr/bin/mysqld --user=mysql --bootstrap < /tmp/create_db.sql
-        rm -f /tmp/create_db.sql
+	# run init.sql
+	/usr/bin/mysqld --user=mysql --bootstrap < $tfile
+	rm -f $tfile
 fi
 
-cat tmpl.sql | envsubst > /init.sql
+# allow remote connections
+sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
+sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
 
-cat init.sql
-
-mysqld --user=mysql --bootstrap < /init.sql
-
+exec /usr/bin/mysqld --user=mysql --console
