@@ -11,7 +11,8 @@ ARG DB_NAME \
     WP_ADMIN_PASSWORD \
     WP_ADMIN_EMAIL \
     WP_USER_LOGIN \
-    WP_USER_EMAIL
+    WP_USER_EMAIL \
+    WP_USER_PASS
 
 # Packages to install
 RUN apt-get update -yq

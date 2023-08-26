@@ -50,6 +50,7 @@ services:
         WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
         WP_USER_LOGIN: ${WP_USER_LOGIN}
         WP_USER_EMAIL: ${WP_USER_EMAIL}
+        WP_USER_PASS: ${WP_USER_PASS}
     container_name: wordpress
     depends_on:
       - mariadb
