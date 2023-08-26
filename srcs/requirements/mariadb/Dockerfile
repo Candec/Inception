@@ -1,13 +1,34 @@
-FROM debian:buster
+FROM debian:10.11
 
-RUN apt-get update
-RUN apt-get install -y mariadb-server
+RUN apt-get update && \
+    apt-get -y install \
+        gettext-base \
+        mariadb-server \
+	mariadb-client \
+        procps \
+        nano
+#    rm -rf /var/lib/apt/lists/*
 
-EXPOSE 3306
+#RUN apt-get install nano -yq
 
-COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/
-COPY ./tools /var/www/
+#RUN sed -i "s/^bind-address/#bind-address/" /etc/mysql/mariadb.conf.d/50-server.cnf
+#RUN sed -i "s/^#port/port/" /etc/mysql/mariadb.conf.d/50-server.cnf
+# RUN sed -i "s/^#general_log/general_log/g" /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN service mysql start && mysql < /var/www/tmpl.sql && rm -f /var/www/tmpl.sql;
+# init script and launch bash
+RUN mkdir -p /var/run/mysqld \
+  && chown -R mysql:mysql /var/run/mysqld
 
-CMD ["mysqld"]
+COPY ./conf/my.cnf /my.cnf.tmpl
+
+RUN chmod 744 /my.cnf.tmpl
+
+RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
+
+COPY ./conf/tmpl.sql /tmpl.sql
+
+COPY ./tools/run.sh /run.sh
+
+VOLUME [ "/sys/fs/cgroup" ]
+
+ENTRYPOINT [ "bash", "/run.sh" ]
