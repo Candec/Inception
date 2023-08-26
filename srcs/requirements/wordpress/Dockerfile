@@ -73,8 +73,7 @@ RUN wget https://wordpress.org/latest.tar.gz
 RUN tar -xvzf latest.tar.gz
 RUN rm latest.tar.gz
 WORKDIR /var/www/html/wordpress
-RUN chmod +x /var/www/html
-RUN mv index.php ../.
+RUN chmod +x /var/www/html/wordpress
 
 
 COPY tools/configure.sh /tmp/configure.sh
