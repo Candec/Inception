@@ -5,7 +5,7 @@ ARG DB_NAME \
     DB_USER \
     DB_PASS \
     DB_ROOT \
-    WP_DOMAIN_NAME \
+    DOMAIN_NAME \
     WP_TITLE \
     WP_ADMIN_USER \
     WP_ADMIN_PASSWORD \
