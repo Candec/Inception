@@ -68,6 +68,9 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN chmod +x wp-cli.phar
 RUN cp wp-cli.phar /usr/bin/wp
 
+RUN wget https://wordpress.org/latest.tar.gz
+RUN tar -xvzf latest.tar.gz
+RUN rm latest.tar.gz
 WORKDIR /var/www/html/wordpress
 
 COPY tools/configure.sh /tmp/configure.sh
