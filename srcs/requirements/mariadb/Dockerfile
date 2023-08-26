@@ -21,18 +21,15 @@ RUN apt-get update && \
 # 1. Name
 # 2. & 3. skip caching for optimization and skip name checking (we only have one DB)
 # 4. Config for accepting remote connections
-RUN mkdir /var/run/mysqld; \
-    chmod 777 /var/run/mysqld; \
-    { echo '[mysqld]'; \
-      echo 'user=root'; \
-      echo 'port=3306'; \
-      echo 'datadir=/var/lib/mysql'; \
-      echo 'bind-address=0.0.0.0'; \
-      echo 'skip-host-cache'; \
-      # echo 'skip-name-resolve'; \
-    } | tee  /etc/my.cnf.d/docker.cnf; \
-    sed -i "s|skip-networking|skip-networking=false|g" \
-      /etc/my.cnf.d/mariadb-server.cnf
+RUN mkdir -p /var/run/mysqld \
+  && chown -R mysql:mysql /var/run/mysqld
+
+COPY ./conf/my.cnf /my.cnf.tmpl
+
+RUN chmod 744 /my.cnf.tmpl
+
+RUN mv /my.cnf.tmpl /etc/mysql/my.cnf
+
 
 # Expose the port
 EXPOSE 3306
