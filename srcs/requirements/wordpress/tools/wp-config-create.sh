@@ -4,8 +4,6 @@ set -x
 
 cd /var/www/html/wordpress
 
-env
-
 if ! wp core is-installed --allow-root; then
 	# create admin
 	wp core install --allow-root \
