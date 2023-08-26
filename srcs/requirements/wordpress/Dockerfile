@@ -58,7 +58,6 @@ RUN rm -rf latest.tar.gz
 
 WORKDIR /var/www/html/wordpress
 COPY ./requirements/wordpress/conf .
-RUN cp wp-config.php ../../.
 COPY ./requirements/wordpress/conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 # RUN chown -R www-data:www-data /var/www/html/wordpress
