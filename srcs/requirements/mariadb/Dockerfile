@@ -43,4 +43,4 @@ VOLUME [ "/sys/fs/cgroup" ]
 
 ENTRYPOINT [ "bash", "/run.sh" ]
 
-RUN exec mysqld --user=mysql --datadir="/var/lib/mysql" --port=3306 --init-file /init.sql $@
+RUN exec mysqld --user=mysql --datadir="/var/lib/mysql" --port=3306 --init-file /init.sql
