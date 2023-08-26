@@ -28,7 +28,7 @@ RUN apt-get install php7.3-cli \
                     php-xml-util \
                     php-pear -yq
 
-RUN ls -la /etc/php/7.3/fpm/
+RUN ls -la /etc/php/7.3/fpm/conf.d
 # Config configuration
 # RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php73/php-fpm.d/www.conf
 # RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php73/php-fpm.d/www.conf
