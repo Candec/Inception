@@ -37,4 +37,7 @@ fi
 
 cat tmpl.sql | envsubst > /init.sql
 
+cat init.sql
+
+RUN mysqld --user=mysql --bootstrap < /init.sql
 
