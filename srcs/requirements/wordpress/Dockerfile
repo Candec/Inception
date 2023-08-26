@@ -10,19 +10,25 @@ ARG PHP_VERSION=82 \
 RUN apk update && apk upgrade && apk add --no-cache \
     wget \
     unzip \
-    curl \
-    php${PHP_VERSION} \
-    php${PHP_VERSION}-fpm \
-    php${PHP_VERSION}-mysqli \
-    php${PHP_VERSION}-json \
-    php${PHP_VERSION}-curl \
-    php${PHP_VERSION}-dom \
-    php${PHP_VERSION}-exif \
-    php${PHP_VERSION}-fileinfo \
-    php${PHP_VERSION}-mbstring \
-    php${PHP_VERSION}-openssl \
-    php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-zip
+    curl
+RUN apk add php7.3-cli php7.3-fpm php7.3-mysql php7.3-json php7.3-opcache \
+                    php7.3-mbstring php7.3-xml php7.3-cgi php-pear php7.3-zip \
+                    php-net-socket php7.3-common php7.3-gd php7.3-curl \
+                    php-xml-util php7.3-gettext php7.3-bcmath -yq
+
+
+    # php${PHP_VERSION} \
+    # php${PHP_VERSION}-fpm \
+    # php${PHP_VERSION}-mysqli \
+    # php${PHP_VERSION}-json \
+    # php${PHP_VERSION}-curl \
+    # php${PHP_VERSION}-dom \
+    # php${PHP_VERSION}-exif \
+    # php${PHP_VERSION}-fileinfo \
+    # php${PHP_VERSION}-mbstring \
+    # php${PHP_VERSION}-openssl \
+    # php${PHP_VERSION}-xml \
+    # php${PHP_VERSION}-zip
 
 # Config configuration
 RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
