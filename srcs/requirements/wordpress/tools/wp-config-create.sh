@@ -4,10 +4,11 @@ set -x
 
 cd /var/www/html/wordpress
 
-echo NOW I SHOULD INSTALL WP
+echo getenv('MYSQL_DATABASE')
+echo $'MYSQL_DATABASE'
+
 if ! wp core is-installed --allow-root; then
 	# create admin
-	echo NOW I COINFIGURE WP
 	wp core install --allow-root \
 	--url=https://$DOMAIN_NAME \
 	--title=$WP_TITLE \
