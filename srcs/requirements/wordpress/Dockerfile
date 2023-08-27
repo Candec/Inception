@@ -56,6 +56,7 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 
 WORKDIR /var/www
 COPY ./requirements/wordpress/tools/wp-create-users.sh .
+RUN ls -la
 RUN sh wp-create-users.sh && rm wp-create-users.sh
 
 
