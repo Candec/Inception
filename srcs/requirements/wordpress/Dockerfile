@@ -15,6 +15,7 @@ RUN apk update && apk upgrade && apk add --no-cache \
     php${PHP_VERSION} \
     php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-mysqli \
+    php${PHP_VERSION}-mysqlnd \
     php${PHP_VERSION}-json \
     php${PHP_VERSION}-curl \
     php${PHP_VERSION}-dom \
