@@ -3,71 +3,70 @@ FROM alpine:3.13
 RUN	apk update && apk upgrade && apk add --no-cache \
 		wget				\
         tar                 \
-		mariadb-client		\
+		mariadb-client
 		# Wordpress core depencencies
-        php81-common \
-        php81-pdo_sqlite \
-        php81-pear \
-        php81-ftp \
-        php81-imap \
-        php81-mysqli \
-        php81-json \
-        php81-mbstring \
-        php81-soap \
-        php81-litespeed \
-        php81-sockets \
-        php81-bcmath \
-        php81-opcache \
-        php81-dom \
-        php81-zlib \
-        php81-gettext \
-        php81-fpm \
-        php81-intl \
-        php81-openssl \
-        php81-session \
-        php81-pdo_mysql \
-        php81-embed \
-        php81-xmlrpc \
-        php81-wddx \
-        php81-dba \
-        php81-ldap \
-        php81-xsl \
-        php81-exif \
-        php81-pdo_dblib \
-        php81-bz2 \
-        php81-pdo \
-        php81-pspell \
-        php81-sysvmsg \
-        php81-gmp \
-        php81-apache2 \
-        php81-pdo_odbc \
-        php81-shmop \
-        php81-ctype \
-        php81-phpdbg \
-        php81-enchant \
-        php81-sysvsem \
-        php81-sqlite3 \
-        php81-odbc \
-        php81-pcntl \
-        php81-calendar \
-        php81-xmlreader \
-        php81-snmp \
-        php81-zip \
-        php81-posix \
-        php81-iconv \
-        php81-curl \
-        php81-doc \
-        php81-gd \
-        php81-xml \
-        php81-dev \
-        php81-cgi \
-        php81-sysvshm \
-        php81-pgsql \
-        php81-tidy \
-        php81-pdo_pgsql \
-        php81-phar \
-        php81-mysqlnd
-
+RUN apk add php81-common
+RUN apk add php81-pdo_sqlite
+RUN apk add php81-pear
+RUN apk add php81-ftp
+RUN apk add php81-imap
+RUN apk add php81-mysqli
+RUN apk add php81-json
+RUN apk add php81-mbstring
+RUN apk add php81-soap
+RUN apk add php81-litespeed
+RUN apk add php81-sockets
+RUN apk add php81-bcmath
+RUN apk add php81-opcache
+RUN apk add php81-dom
+RUN apk add php81-zlib
+RUN apk add php81-gettext
+RUN apk add php81-fpm
+RUN apk add php81-intl
+RUN apk add php81-openssl
+RUN apk add php81-session
+RUN apk add php81-pdo_mysql
+RUN apk add php81-embed
+RUN apk add php81-xmlrpc
+RUN apk add php81-wddx
+RUN apk add php81-dba
+RUN apk add php81-ldap
+RUN apk add php81-xsl
+RUN apk add php81-exif
+RUN apk add php81-pdo_dblib
+RUN apk add php81-bz2
+RUN apk add php81-pdo
+RUN apk add php81-pspell
+RUN apk add php81-sysvmsg
+RUN apk add php81-gmp
+RUN apk add php81-apache2
+RUN apk add php81-pdo_odbc
+RUN apk add php81-shmop
+RUN apk add php81-ctype
+RUN apk add php81-phpdbg
+RUN apk add php81-enchant
+RUN apk add php81-sysvsem
+RUN apk add php81-sqlite3
+RUN apk add php81-odbc
+RUN apk add php81-pcntl
+RUN apk add php81-calendar
+RUN apk add php81-xmlreader
+RUN apk add php81-snmp
+RUN apk add php81-zip
+RUN apk add php81-posix
+RUN apk add php81-iconv
+RUN apk add php81-curl
+RUN apk add php81-doc
+RUN apk add php81-gd
+RUN apk add php81-xml
+RUN apk add php81-dev
+RUN apk add php81-cgi
+RUN apk add php81-sysvshm
+RUN apk add php81-pgsql
+RUN apk add php81-tidy
+RUN apk add php81-pdo_pgsql
+RUN apk add php81-phar
+RUN apk add php81-mysqlnd
 
 # php config
 RUN	adduser -S nginx &&	addgroup -S nginx
