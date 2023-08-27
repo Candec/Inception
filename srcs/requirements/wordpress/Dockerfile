@@ -4,7 +4,8 @@ FROM alpine:3.18
 ARG PHP_VERSION=82 \
     DB_NAME \
     DB_USER \
-    DB_PASS
+    DB_PASS \
+    DOMAIN_NAME
 
 # Packages to install
 RUN apk update && apk upgrade && apk add --no-cache \
@@ -51,6 +52,11 @@ WORKDIR /tmp/
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
+
+WORKDIR /var/www
+COPY .requirements/wordpress/tools/wp-create-users.sh .
+RUN sh wp-create-users.sh && rm wp-create-users.sh
+
 
 # Builds PHP version 8.2
 CMD ["/usr/sbin/php-fpm82", "-F"]
