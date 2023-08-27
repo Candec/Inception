@@ -5,7 +5,7 @@ RUN	apk update && apk upgrade && apk add --no-cache \
         tar                 \
 		mariadb-client		\
 		# Wordpress core depencencies
-		php7				\
+		php7.4				\
 		php7-fpm			\
 		php7-bcmath			\
 		php7-bz2 			\
@@ -60,7 +60,7 @@ COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
 COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
 
 # static website
-# COPY conf/index.html /var/www/html/index.html
+COPY conf/index.html /var/www/html/index.html
 
 # install wordpress
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
