@@ -1,18 +1,4 @@
-# IF wordpress DB is not created, then create it ...
-## WAIT FOR MARIADB TO BE READY
-## CREATE THE USERS FOR THE DATABASE
-## CREATE THE ADMIN USER FOR THE DATABASE
-
 set -x
-
-#ADMIN_USER=pancho
-#ADMIN_PASSWORD=villa
-#ADMIN_EMAIL=pvilla@gmail.com
-#WP_TITLE=pulga_site
-#WP_URL=https://$DOMAIN_NAME
-#WP_USER_LOGIN=arosado-
-#WP_USER_EMAIL=arosado@student.pt
-#WP_USER_PASS=pass123
 
 while [ ! -e /var/www/html/wordpress/ ]
 do

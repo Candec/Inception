@@ -8,10 +8,10 @@ function create_host {
 	delete_host
 	NGINX_IP=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nginx`
 
-	sudo sed -i '1i'$NGINX_IP' arosado-.42.fr' /etc/hosts
-	sudo sed -i '1i'$NGINX_IP' www.arosado-.42.fr' /etc/hosts
-	sudo sed -i '1i'$NGINX_IP' https://wwww.arosado-.42.fr' /etc/hosts
-	sudo sed -i '1i # Inception setup ... arosado-.42.fr ' /etc/hosts
+	sudo sed -i '1i'$NGINX_IP' jibanez-.42.fr' /etc/hosts
+	sudo sed -i '1i'$NGINX_IP' www.jibanez-.42.fr' /etc/hosts
+	sudo sed -i '1i'$NGINX_IP' https://wwww.jibanez-.42.fr' /etc/hosts
+	sudo sed -i '1i # Inception setup ... jibanez-.42.fr ' /etc/hosts
 }
 
 

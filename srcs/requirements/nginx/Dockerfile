@@ -9,10 +9,10 @@ RUN apt-get install gettext-base -yq
 RUN ln -sf /usr/share/zoneinfo/Europe/Lisbon /etc/localtime
 RUN mkdir -p /etc/nginx/ssl
 RUN openssl req -new -x509 -days 365 -nodes \
--out /etc/nginx/ssl/arosado-.pem \
--keyout /etc/nginx/ssl/arosado-.key \
--subj "/C=PO/ST=Lisbon/L=Lisbon/O=42Lisboa/OU=42Lisboa-/CN=arosado-.42.fr/"
-RUN chmod 600 /etc/nginx/ssl/arosado-*
+-out /etc/nginx/ssl/jibanez-.pem \
+-keyout /etc/nginx/ssl/jibanez-.key \
+-subj "/C=PO/ST=Lisbon/L=Lisbon/O=42Lisboa/OU=42Lisboa-/CN=jibanez-.42.fr/"
+RUN chmod 600 /etc/nginx/ssl/jibanez-*
 
 COPY /tools/ /tmp/
 COPY /conf/default.conf.tmpl /default.conf.tmpl

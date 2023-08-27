@@ -2,8 +2,8 @@
 # User SetUp #
 ##############
 su
-sudo adduser arosado-
-usermod -aG sudo arosado-
+sudo adduser jibanez-
+usermod -aG sudo jibanez-
 sudo reboot
 ##################
 # Install Docker #
@@ -76,9 +76,9 @@ docker run -d -p  3600:3600 --name mariadb mariadb
 ########################
 sudo cat << EOF >> /etc/hosts
 #Inception Setup
-127.0.0.1 arosado-42.fr
-127.0.0.1 www.arosado-.42.fr
-127.0.0.1 https:www.arosado.42.f
+127.0.0.1 jibanez-42.fr
+127.0.0.1 www.jibanez-.42.fr
+127.0.0.1 https:www.jibanez.42.f
 EOF
 
 
