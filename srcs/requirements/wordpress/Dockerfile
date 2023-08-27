@@ -36,11 +36,11 @@ RUN apk update && apk upgrade && apk add --no-cache \
 # RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
 # RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php82/php-fpm.d/www.conf
 # RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm.d/www.conf
+COPY ./conf/www.conf /etc/php82/php-fpm.d/
 
 # Clear de cache
 RUN rm -f /var/cache/apk/*
 
-# COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d
 
 EXPOSE 9000
 
