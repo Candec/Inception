@@ -2,11 +2,11 @@ set -x
 
 # cd /var/www/html/wordpress
 
-sed -i "s/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/" "/etc/php/7.3/fpm/pool.d/www.conf";
+# sed -i "s/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/" "/etc/php/8.2/fpm/pool.d/www.conf";
 chown -R www-data:www-data /var/www/*;
 chown -R 755 /var/www/*;
 mkdir -p /run/php/;
-touch /run/php/php7.3-fpm.pid;
+touch /run/php/php8.2-fpm.pid;
 
 wp core download --allow-root
 # wp config create --dbname=$DB_NAME --dbuser=$DB_USER --prompt=$DB_PASS --dbhost="mariadb" --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
