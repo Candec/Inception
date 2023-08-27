@@ -71,8 +71,8 @@ RUN	apk update && apk upgrade && apk add --no-cache \
 
 # php config
 RUN	adduser -S nginx &&	addgroup -S nginx
-COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
-COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
+COPY conf/php-fpm.conf /etc/php81/php-fpm.conf
+COPY conf/www.conf /etc/php81/php-fpm.d/www.conf
 
 # static website
 # COPY conf/index.html /var/www/html/index.html
