@@ -40,6 +40,8 @@ RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm
 # Clear de cache
 RUN rm -f /var/cache/apk/*
 
+EXPOSE 9000
+
 # Change Directory
 WORKDIR /var/www
 
