@@ -11,9 +11,9 @@ RUN apt-get install php7.3-cli php7.3-fpm php7.3-mysql php7.3-json php7.3-opcach
                     php-xml-util php7.3-gettext php7.3-bcmath -yq
 
 # php config
-RUN	adduser -S nginx &&	addgroup -S nginx
+RUN	adduser nginx && addgroup nginx
 COPY conf/php-fpm.conf /etc/php73/php-fpm.conf
-COPY conf/www.conf /etc/php73/php-fpm.d/www.conf
+COPY conf/www.conf /etc/php/7.3/php-fpm.d/pool.d/www.conf
 
 # static website
 # COPY conf/index.html /var/www/html/index.html
