@@ -56,9 +56,9 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 
 WORKDIR /var/www
 COPY ./requirements/wordpress/tools/wp-create-users.sh .
+CMD ["/usr/sbin/php-fpm82", "-F"]
 RUN ls -la
 RUN sh wp-create-users.sh && rm wp-create-users.sh
 
 
 # Builds PHP version 8.2
-CMD ["/usr/sbin/php-fpm82", "-F"]
