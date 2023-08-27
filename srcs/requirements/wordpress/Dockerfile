@@ -5,7 +5,7 @@ RUN	apk update && apk upgrade && apk add --no-cache \
         tar                 \
 		mariadb-client		\
 		# Wordpress core depencencies
-		php7.4				\
+		php7				\
 		php7-fpm			\
 		php7-bcmath			\
 		php7-bz2 			\
