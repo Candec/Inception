@@ -47,5 +47,10 @@ RUN sh wp-config-create.sh && rm wp-config-create.sh
 # Gives permision to all users
 RUN chmod -R 0777 wp-content/
 
+WORKDIR /tmp/
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
+
 # Builds PHP version 8.2
 CMD ["/usr/sbin/php-fpm82", "-F"]
