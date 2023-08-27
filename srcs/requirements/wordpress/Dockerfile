@@ -12,6 +12,7 @@ RUN apk update && apk upgrade && apk add --no-cache \
     wget \
     unzip \
     curl \
+    mariadb-client \
     php${PHP_VERSION} \
     php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-mysqli \
