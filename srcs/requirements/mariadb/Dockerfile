@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get -y install \
         gettext-base \
         mariadb-server \
-        mariadb-client \
+	mariadb-client \
         procps \
         nano
 #    rm -rf /var/lib/apt/lists/*
