@@ -3,7 +3,7 @@ set -x
 # cd /var/www/html/wordpress
 
 wp core download --allow-root
-wp config create --dbname=$DB_NAME --dbuser=$DB_USER --prompt=$DB_PASS --dbhost="localhost:3306" --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
+wp config create --dbname=$DB_NAME --dbuser=$DB_USER --prompt=$DB_PASS --dbhost="mariadb" --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
 wp core install --url=$DOMAIN_NAME/wordpress --title="Inception" --admin_user="master" --admin_password="chief" --admin_email="master@chief.com" --skip-email --allow-root
 wp user create candec candec@gmail.com --role=author --user_pass="abc123" --allow-root
 
