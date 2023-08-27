@@ -1,42 +1,28 @@
-name = inception
-all:
-	@printf "Launch configuration ${name}...\n"
-	@bash srcs/requirements/wordpress/tools/make_dir.sh
-	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d
+NAME := Inception
+UNAME = $(uname -a)
+CONTAINERS = nginx wordpress mariadb
 
-build:
-	@printf "Building configuration ${name}...\n"
-	@bash srcs/requirements/wordpress/tools/make_dir.sh
-	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
+#nginx: docker build [--tag image-name] .
+
+$(NAME): up
+
+all: $(NAME)
+
+up:
+	docker-compose -f srcs/docker-compose.yml up --build -d
+	bash srcs/requirements/tools/hosts.sh create
 
 down:
-	@printf "Stopping configuration ${name}...\n"
-	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env down
-
-re: down
-	@printf "Rebuild configuration ${name}...\n"
-	@docker volume rm srcs_wp-volume
-	@docker volume rm srcs_db-volume
-	@sudo rm -rf ~/Inception/data/
-	@bash srcs/requirements/wordpress/tools/make_dir.sh
-	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
+	docker-compose -f srcs/docker-compose.yml down
+	bash srcs/requirements/tools/hosts.sh delete
 
 clean: down
-	@printf "Cleaning configuration ${name}...\n"
-	@docker system prune -a
-	@sudo rm -rf ~/Inception/data/wordpress/*
-	@sudo rm -rf ~/Inception/data/mariadb/*
-	@sudo rm -rf ~/Inception/data/
+	echo "Cleaning Docker Volumes"
+	sudo rm -rf /home/pulga/data/*
 
-fclean:
-	@printf "Total clean of all configurations docker\n"
-	@docker stop $$(docker ps -qa)
-	@docker system prune --all --force --volumes
-	@docker network prune --force
-	@docker volume prune --force
-	@sudo rm -rf ~/Inception/data/wordpress/*
-	@sudo rm -rf ~/Inception/data/mariadb/*
-	@sudo rm -rf ~/Inception/data/
+fclean: clean
+	docker system prune -f
+	@-docker rmi -f $(docker images -qa)
+	@-docker volume rm db wp
 
-
-.PHONY	: all build down re clean fclean
+re: fclean up

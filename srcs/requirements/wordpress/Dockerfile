@@ -1,78 +1,35 @@
-FROM alpine:3.18
+FROM debian:10.11
 
-# Arguments to complete the following commands
-ARG PHP_VERSION=82 \
-    DB_NAME \
-    DB_USER \
-    DB_PASS \
-    DB_HOST \
-    DOMAIN_NAME
+RUN apt-get update -yq
 
-# Packages to install
-RUN apk update && apk upgrade && apk add --no-cache \
-    wget \
-    unzip \
-    curl \
-    mariadb-client \
-    php${PHP_VERSION} \
-    php${PHP_VERSION}-fpm \
-    php${PHP_VERSION}-mysqli \
-    php${PHP_VERSION}-mysqlnd \
-    php${PHP_VERSION}-json \
-    php${PHP_VERSION}-curl \
-    php${PHP_VERSION}-dom \
-    php${PHP_VERSION}-exif \
-    php${PHP_VERSION}-fileinfo \
-    php${PHP_VERSION}-mbstring \
-    php${PHP_VERSION}-openssl \
-    php${PHP_VERSION}-phar \
-    php${PHP_VERSION}-pdo_mysql \
-    php${PHP_VERSION}-pdo_pgsql \
-	php${PHP_VERSION}-pdo_sqlite \
-	php${PHP_VERSION}-pgsql \
-    php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-zip
+RUN apt-get install vim -yq
+RUN apt-get install curl -yq
+RUN apt-get install wget -yq
+RUN apt-get install php7.3-cli php7.3-fpm php7.3-mysql php7.3-json php7.3-opcache \
+                    php7.3-mbstring php7.3-xml php7.3-cgi php-pear php7.3-zip \
+                    php-net-socket php7.3-common php7.3-gd php7.3-curl \
+                    php-xml-util php7.3-gettext php7.3-bcmath -yq
 
-# Config configuration
-# RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php82/php-fpm.d/www.conf
-# RUN sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php82/php-fpm.d/www.conf
-# RUN sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php82/php-fpm.d/www.conf
-COPY ./requirements/wordpress/conf/www.conf /etc/php82/php-fpm.d/
+RUN ln -sf /usr/share/zoneinfo/Europe/Lisbon /etc/localtime
 
-# Clear de cache
-RUN rm -f /var/cache/apk/*
+COPY /tools/ /tmp/
 
+RUN mkdir /var/www
+RUN mkdir /var/www/html
+WORKDIR /var/www/html
+RUN wget https://wordpress.org/latest.tar.gz
+RUN tar -xvzf latest.tar.gz
+RUN rm latest.tar.gz
+WORKDIR /var/www/html/wordpress
+COPY /conf/ .
+RUN chown -R www-data:www-data /var/www/html/wordpress
 
-EXPOSE 9000
+COPY /conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
-# Change Directory
-WORKDIR /var/www
-
-# Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
-# RUN wget https://wordpress.org/latest.zip
-# RUN unzip latest.zip
-# RUN cp -rf wordpress/* .
-# RUN rm -rf wordpress latest.zip
-
-# Copies, run and delete a wp config script
-# COPY ./requirements/wordpress/conf/wp-config-create.sh .
-# RUN sh wp-config-create.sh && rm wp-config-create.sh
-
-# Gives permision to all users
-# RUN chmod -R 0777 wp-content/
-
-RUN ln -s /usr/bin/php82 /usr/bin/php
-
+# Wordpress Instalation
 WORKDIR /tmp/
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
-WORKDIR /var/www
-COPY ./requirements/wordpress/conf/wp-config.php /tmp/.
-COPY ./requirements/wordpress/tools/wp-create-users.sh .
-RUN sh wp-create-users.sh && rm wp-create-users.sh
-
-
-# Builds PHP version 8.2
-CMD ["/usr/sbin/php-fpm82", "-F"]
+ENTRYPOINT ["sh","-c", "/bin/bash /tmp/run.sh;"]
