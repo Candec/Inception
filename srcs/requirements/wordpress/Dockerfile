@@ -24,6 +24,10 @@ RUN apk update && apk upgrade && apk add --no-cache \
     php${PHP_VERSION}-mbstring \
     php${PHP_VERSION}-openssl \
     php${PHP_VERSION}-phar \
+    php${PHP_VERSION}-pdo_mysql \
+    php${PHP_VERSION}-php7-pdo_pgsql \
+	php${PHP_VERSION}-php7-pdo_sqlite \
+	php${PHP_VERSION}-php7-pgsql \
     php${PHP_VERSION}-xml \
     php${PHP_VERSION}-zip
 
