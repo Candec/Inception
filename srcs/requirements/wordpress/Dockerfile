@@ -37,17 +37,17 @@ RUN rm -f /var/cache/apk/*
 WORKDIR /var/www
 
 # Downloads Wordpress, unzip it, copy it to the present dir and deletes the source
-RUN wget https://wordpress.org/latest.zip
-RUN unzip latest.zip
-RUN cp -rf wordpress/* .
-RUN rm -rf wordpress latest.zip
+# RUN wget https://wordpress.org/latest.zip
+# RUN unzip latest.zip
+# RUN cp -rf wordpress/* .
+# RUN rm -rf wordpress latest.zip
 
 # Copies, run and delete a wp config script
-COPY ./requirements/wordpress/conf/wp-config-create.sh .
-RUN sh wp-config-create.sh && rm wp-config-create.sh
+# COPY ./requirements/wordpress/conf/wp-config-create.sh .
+# RUN sh wp-config-create.sh && rm wp-config-create.sh
 
 # Gives permision to all users
-RUN chmod -R 0777 wp-content/
+# RUN chmod -R 0777 wp-content/
 
 WORKDIR /tmp/
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -56,9 +56,8 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 
 WORKDIR /var/www
 COPY ./requirements/wordpress/tools/wp-create-users.sh .
-CMD ["/usr/sbin/php-fpm82", "-F"]
-RUN ls -la
 RUN sh wp-create-users.sh && rm wp-create-users.sh
 
 
 # Builds PHP version 8.2
+CMD ["/usr/sbin/php-fpm82", "-F"]
