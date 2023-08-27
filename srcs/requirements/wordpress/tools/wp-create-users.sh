@@ -2,6 +2,10 @@ set -x
 
 # cd /var/www/html/wordpress
 
+while ! mariadb -h$DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME &>/dev/null; do
+    sleep 3
+done
+
 wp core download --allow-root
 # wp config create --dbname=$DB_NAME --dbuser=$DB_USER --prompt=$DB_PASS --dbhost="mariadb" --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
 mv /tmp/wp-config.php .
