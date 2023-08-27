@@ -11,10 +11,10 @@ touch /run/php/php7.3-fpm.pid;
 wp core download --allow-root
 # wp config create --dbname=$DB_NAME --dbuser=$DB_USER --prompt=$DB_PASS --dbhost="mariadb" --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
 
-mv /var/www/wp-config.php /var/www/wordpress
+# mv /var/www/wp-config.php /var/www/wordpress
 
-wp core install --url=$DOMAIN_NAME/wordpress --title="Inception" --admin_user="master" --admin_password="chief" --admin_email="master@chief.com" --skip-email --allow-root
-wp user create candec candec@gmail.com --role=author --user_pass="abc123" --allow-root
+# wp core install --url=$DOMAIN_NAME/wordpress --title="Inception" --admin_user="master" --admin_password="chief" --admin_email="master@chief.com" --skip-email --allow-root
+# wp user create candec candec@gmail.com --role=author --user_pass="abc123" --allow-root
 
 # if ! wp core is-installed --allow-root; then
 # 	# create admin
