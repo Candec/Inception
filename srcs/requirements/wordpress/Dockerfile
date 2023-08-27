@@ -60,7 +60,7 @@ COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
 COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
 
 # static website
-COPY conf/index.html /var/www/html/index.html
+# COPY conf/index.html /var/www/html/index.html
 
 # install wordpress
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -71,6 +71,7 @@ WORKDIR /var/www/html
 RUN wget https://wordpress.org/latest.tar.gz
 RUN tar -xvzf latest.tar.gz
 RUN rm latest.tar.gz
+RUN cp wordpress/index.php .
 WORKDIR /var/www/html/wordpress
 RUN chmod +x /var/www/html/wordpress/index.php
 
