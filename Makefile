@@ -9,6 +9,7 @@ $(NAME): up
 all: $(NAME)
 
 up:
+	mkdir /home/jibanez-/data
 	docker-compose -f srcs/docker-compose.yml up --build -d
 	bash srcs/requirements/tools/hosts.sh create
 
@@ -18,7 +19,7 @@ down:
 
 clean: down
 	echo "Cleaning Docker Volumes"
-	sudo rm -rf /home/pulga/data/*
+	sudo rm -rf /home/jibanez-/data/*
 
 fclean: clean
 	docker system prune -f
