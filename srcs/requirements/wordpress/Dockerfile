@@ -49,6 +49,8 @@ WORKDIR /var/www
 # Gives permision to all users
 # RUN chmod -R 0777 wp-content/
 
+RUN ln -s /usr/bin/php82 /usr/bin/php
+
 WORKDIR /tmp/
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
